@@ -3,6 +3,9 @@ import time
 import networkx as nx
 import pickle
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Constants
 BASE_URL = 'https://api.github.com/users/'
