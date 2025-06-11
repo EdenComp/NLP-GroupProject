@@ -58,7 +58,7 @@ def build_graph(start_user, depth=1):
         queue.extend([(f, level + 1) for f in following])
         time.sleep(0.5)  # Respect GitHub rate limits
 
-    save_graph(G)
+        save_graph(G)
 
 
 # Run the script
@@ -68,4 +68,4 @@ if __name__ == "__main__":
         print("Set a token with: export GITHUB_TOKEN='your_token_here'")
 
     username = input("Enter username to start collection: ").strip().lower()
-    build_graph(username, depth=2)
+    build_graph(username, depth=3)
