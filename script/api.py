@@ -11,7 +11,7 @@ def get_path(user1, user2):
     # Get max_depth from query parameter, default to 3
     max_depth = request.args.get('max_depth', default=3, type=int)
 
-    # Check path between users using the pre-loaded graph
+    # Check path between users using the preloaded graph
     found, path = query.check_path(graph, user1.lower(), user2.lower(), max_depth=max_depth)
 
     if found:
