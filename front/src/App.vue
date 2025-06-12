@@ -1,37 +1,35 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import confetti from 'canvas-confetti'
+import { getPath } from './services/api'
 
 const githubUser1 = ref('')
 const githubUser2 = ref('')
 const handshakeChain = ref<string[]>([])
+const isLoading = ref(false)
+const errorMessage = ref('')
 
-const knownUsers = [
-  'torvalds',
-  'gaearon',
-  'sindresorhus',
-  'yyx990803',
-  'getify',
-  'tj',
-  'addyosmani',
-  'rauchg',
-  'defunkt',
-  'fabpot'
-]
-
-function processHandshake() {
+async function processHandshake() {
   if (githubUser1.value && githubUser2.value) {
-    handshakeChain.value = [
-      githubUser1.value,
-      ...knownUsers,
-      githubUser2.value
-    ]
+    isLoading.value = true
+    errorMessage.value = ''
 
-    confetti({
-      particleCount: 150,
-      spread: 90,
-      origin: { y: 0.6 }
-    })
+    try {
+      const path = await getPath(githubUser1.value, githubUser2.value)
+      handshakeChain.value = path
+
+      confetti({
+        particleCount: 150,
+        spread: 90,
+        origin: { y: 0.6 }
+      })
+    } catch (error) {
+      console.error(error)
+      errorMessage.value = error instanceof Error ? error.message : 'Failed to fetch path data'
+      handshakeChain.value = []
+    } finally {
+      isLoading.value = false
+    }
   }
 }
 
@@ -76,10 +74,16 @@ function getAvatarUrl(username: string): string {
 
       <button
         @click="processHandshake"
-        class="mt-2 px-8 py-3 bg-indigo-600 text-white font-semibold rounded-xl shadow-md hover:bg-indigo-700 active:scale-95 transition text-lg"
+        :disabled="isLoading || !githubUser1 || !githubUser2"
+        class="mt-2 px-8 py-3 bg-indigo-600 text-white font-semibold rounded-xl shadow-md hover:bg-indigo-700 active:scale-95 transition text-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
       >
-        🔍 Process
+        <span v-if="isLoading">⏳ Processing...</span>
+        <span v-else>🔍 Process</span>
       </button>
+
+      <div v-if="errorMessage" class="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-xl">
+        {{ errorMessage }}
+      </div>
 
       <div v-if="handshakeChain.length" class="space-y-8 mt-8">
         <div class="flex flex-wrap justify-center items-center gap-4">

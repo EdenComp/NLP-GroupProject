@@ -1,5 +1,31 @@
-# Vue 3 + TypeScript + Vite
+# GitHub Handshake - Frontend
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A Vue 3 + TypeScript application that finds the shortest path between two GitHub users through their connections.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Setup
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Configure environment variables:
+Create a `.env` file in the root directory with:
+```
+VITE_API_URL=http://localhost:5000
+```
+
+3. Start development server:
+```bash
+npm run dev
+```
+
+## API Integration
+
+The application calls the backend API endpoint `GET /path/:user1/:user2` to fetch the connection path between two users. The API URL is configurable via the `VITE_API_URL` environment variable.
+
+## Build
+
+```bash
+npm run build
+```
