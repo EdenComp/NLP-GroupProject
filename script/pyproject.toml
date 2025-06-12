@@ -3,7 +3,8 @@ name = "nlp-group"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Reza Rahemtola",email = "reza.rahemtola@epitech.eu"}
+    {name = "Reza Rahemtola",email = "reza.rahemtola@epitech.eu"},
+    {name = "Dorian Moy",email = "dorian.moy@proton.me"},
 ]
 readme = "README.md"
 requires-python = ">=3.12"
